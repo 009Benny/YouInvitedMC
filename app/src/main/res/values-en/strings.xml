@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YouInvited</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_principal">PrincipalActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="nameFill">Name</string>
+    <string name="addressFill">Address</string>
+    <string name="phoneFill">Phone</string>
+    <string name="adminSelect">Admin account?</string>
+    <string name="afirmative">Yes</string>
+    <string name="negative">No</string>
+    <!--    Login-->
+    <string name="welcome_message">Welcome!, Log in please</string>
+    <string name="btnLogin">Log In</string>
+    <string name="btnRegister">Register</string>
+    <string name="fillData">Please, fill all the spaces</string>
+
+    <!---->
+    <string name="homeFragment">Fragment Home</string>
+    <string name="galleryFragment">Fragment Gallery</string>
+    <string name="languageFragment">Fragment Language</string>
+    <!--    -->
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Change laguage</string>
+
+    <string name="select_languaje">Click here to change your language</string>
+    <string name="btn_languaje">Change language</string>
+
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YouInvited</string>
+    <string name="title_activity_login">Iniciar Sesion</string>
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Constraseña</string>
+    <string name="action_sign_in">Inicia sesión o registrate</string>
+    <string name="action_sign_in_short">Inicia sesión</string>
+    <string name="welcome">"Bienvenido"</string>
+    <string name="invalid_username">No es un nombre de usuario valido</string>
+    <string name="invalid_password">No es una constraseña valida</string>
+    <string name="login_failed">"Error al iniciar sesión"</string>
+    <string name="dummy_button">Botón dummy</string>
+    <string name="dummy_content">Contenido dummy</string>
+    <string name="title_activity_principal">Portada</string>
+    <string name="navigation_drawer_open">Abrir navegador</string>
+    <string name="navigation_drawer_close">Cerrar navegador</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Encabezado de Navegación</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="nameFill">Nombre</string>
+    <string name="addressFill">Dirección</string>
+    <string name="phoneFill">Celular</string>
+    <string name="adminSelect">Administrador</string>
+    <string name="afirmative">Si</string>
+    <string name="negative">No</string>
+    <!--    Login-->
+    <string name="welcome_message">Bienvenido, favor de iniciar sesión</string>
+    <string name="btnLogin">Iniciar sesión</string>
+    <string name="btnRegister">Registrarse</string>
+    <string name="fillData">Por favor, llena todos los campos</string>
+
+    <!---->
+    <string name="homeFragment">Fragmento Portada</string>
+    <string name="galleryFragment">Fragmento Galeria</string>
+    <string name="languageFragment">Fragmento Lenguaje</string>
+    <!--    -->
+    <string name="menu_home">Portada</string>
+    <string name="menu_gallery">Galeria</string>
+    <string name="menu_slideshow">Cambio de Idioma</string>
+
+    <string name="select_languaje">Presiona el botón para cambiar de idioma</string>
+    <string name="btn_languaje">Cambiar lenguaje</string>
+
+</resources>
