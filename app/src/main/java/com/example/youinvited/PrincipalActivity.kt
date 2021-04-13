@@ -76,7 +76,7 @@ class PrincipalActivity : AppCompatActivity() {
         builder.setTitle("Elige tu lenguaje")
         builder.setSingleChoiceItems(list, -1){ dialog, which ->
             if (which == 0){
-                this.setLocale("es-rMX")
+                this.setLocale("es")
                 recreate()
             }else if (which == 1){
                 this.setLocale("en")

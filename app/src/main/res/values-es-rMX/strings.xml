@@ -20,9 +20,14 @@
     <string name="nav_header_desc">Encabezado de Navegación</string>
     <string name="action_settings">Configuracion</string>
     <string name="nameFill">Nombre</string>
+    <string name="emailFill">Correo electrónico</string>
     <string name="addressFill">Dirección</string>
     <string name="phoneFill">Celular</string>
     <string name="adminSelect">Administrador</string>
+    <string name="nameHint">Tu nombre aqui!</string>
+    <string name="emailHint">ejemplo@mail.com</string>
+    <string name="addressHint">calle #, ciudad</string>
+    <string name="phoneHint">888-888-88-88</string>
     <string name="afirmative">Si</string>
     <string name="negative">No</string>
     <!--    Login-->
@@ -39,6 +44,7 @@
     <string name="menu_home">Portada</string>
     <string name="menu_gallery">Galeria</string>
     <string name="menu_slideshow">Cambio de Idioma</string>
+    <string name="menu_profile">Perfil</string>
 
     <string name="select_languaje">Presiona el botón para cambiar de idioma</string>
     <string name="btn_languaje">Cambiar lenguaje</string>
