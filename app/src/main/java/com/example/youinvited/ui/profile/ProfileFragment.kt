@@ -11,11 +11,17 @@ import androidx.lifecycle.Observer
 import com.example.youinvited.ProviderType
 import com.example.youinvited.R
 import com.example.youinvited.models.UserClass
+import com.example.youinvited.ui.createEvent.CreateEventFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.textFieldEmail
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.profile_fragment.*
+import kotlinx.android.synthetic.main.profile_fragment.switchAdmin
 
 class ProfileFragment : Fragment() {
+    var edit:Boolean = false
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -27,7 +33,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.updateProfile()
+        this.loadProfile()
         return inflater.inflate(R.layout.profile_fragment, container, false)
     }
 
@@ -41,9 +47,11 @@ class ProfileFragment : Fragment() {
             editTextPhone.setText(it.phone)
             switchAdmin.isChecked = it.admin
         })
+        btnEditProfile.setOnClickListener { this.btnEditAction() }
+        btnCreateEvent.setOnClickListener { if (this.edit) this.btnUpdateProfileAcction() else this.btnCreateEvent() }
     }
 
-    fun updateProfile(){
+    fun loadProfile(){
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         if (uid.length > 0){
             val database = FirebaseDatabase.getInstance()
@@ -54,13 +62,50 @@ class ProfileFragment : Fragment() {
                     this.updateData(map)
                 }
             }.addOnFailureListener {
-
+                print("here")
             }
         }
     }
 
     fun updateData(map: HashMap<String,Any>){
         viewModel.user_Data.value = UserClass(map["uid"] as? String ?: "", map["username"] as? String ?: "", map["email"] as? String ?: "", map["address"] as? String ?: "", map["phone"] as? String ?: "", map["admin"] as? Boolean ?: false)
+    }
+
+
+
+    // MARK: - Btn Actions
+    fun btnEditAction(){
+        this.edit = !this.edit
+        editTextName.isEnabled = this.edit
+        editTextEmail.isEnabled = this.edit
+        editTextAddress.isEnabled = this.edit
+        editTextPhone.isEnabled = this.edit
+        //switchAdmin.isEnabled = this.edit
+        this.btnEditProfile.text = if (this.edit) getString(R.string.cancelButton) else getString(R.string.editButton)
+        this.btnCreateEvent.text = if (this.edit) getString(R.string.updateProfileButton) else getString(R.string.createEvent)
+    }
+
+    fun btnCreateEvent(){
+        val newFragment = CreateEventFragment()
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.add(R.id.nav_host_fragment, newFragment)
+        transaction?.commit()
+    }
+
+    fun btnUpdateProfileAcction(){
+        val uid:String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val email:String = editTextEmail.text.toString()
+        if (email.length > 0 && uid.length > 0) {
+            val database = FirebaseDatabase.getInstance()
+            val user = UserClass(uid, editTextName.text.toString(), email, editTextAddress.text.toString(), editTextPhone.text.toString(), switchAdmin.isChecked)
+            val ref = database.getReference("Users")
+            //ref.child(user_id).setValue(user)
+            ref.child(uid).setValue(user)
+            Toast.makeText(activity, "Se actualizo correctamente", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(activity, "No se pudo actualizar, intentelo de nuevo más tarde", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 }

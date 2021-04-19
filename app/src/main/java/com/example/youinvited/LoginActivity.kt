@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        this.loadLocate()
         setContentView(R.layout.activity_login)
-        title = "Iniciar Sesión"
+        title = ""
 //        this.progressBar = findViewById(R.id.)
         button_register.setOnClickListener { this.btnRegisterAction() }
         button_login.setOnClickListener { this.loginUser() }
@@ -67,6 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun getUserData(uid:String){
         val database = FirebaseDatabase.getInstance()
+        database.setPersistenceEnabled(true)
         val ref = database.getReference("Users")
         ref.child(uid).get().addOnSuccessListener {
             val user= it.getValue() as? UserClass

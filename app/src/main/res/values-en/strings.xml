@@ -32,9 +32,18 @@
     <string name="negative">No</string>
     <!--    Login-->
     <string name="welcome_message">Welcome!, Log in please</string>
+    <string name="nameEvent">YouInvited Fest!</string>
     <string name="btnLogin">Log In</string>
     <string name="btnRegister">Register</string>
     <string name="fillData">Please, fill all the spaces</string>
+    <string name="editButton">Edit</string>
+    <string name="createEvent">Create event</string>
+    <string name="cancelButton">Cancel</string>
+    <string name="updateProfileButton">Update profile</string>
+    <string name="invitedCount">Invited count</string>
+    <string name="eventDate">Event date</string>
+    <string name="eventDateHint">Select day</string>
+    <string name="saveButton">Save</string>
 
     <!---->
     <string name="homeFragment">Fragment Home</string>
@@ -45,6 +54,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Change laguage</string>
     <string name="menu_profile">Profile</string>
+    <string name="createEventFragment">Create an event</string>
 
     <string name="select_languaje">Click here to change your language</string>
     <string name="btn_languaje">Change language</string>

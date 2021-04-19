@@ -32,14 +32,25 @@
     <string name="negative">No</string>
     <!--    Login-->
     <string name="welcome_message">Bienvenido, favor de iniciar sesión</string>
+    <string name="nameEvent">Fiesta YouInvited!</string>
     <string name="btnLogin">Iniciar sesión</string>
     <string name="btnRegister">Registrarse</string>
     <string name="fillData">Por favor, llena todos los campos</string>
+    <string name="editButton">Editar</string>
+    <string name="createEvent">Crear evento</string>
+    <string name="cancelButton">Cancelar</string>
+    <string name="updateProfileButton">Actualizar perfil</string>
+    <string name="invitedCount">Numero de invitados</string>
+    <string name="eventDate">Fecha del evento</string>
+    <string name="eventDateHint">Selecciona el dia</string>
+    <string name="saveButton">Guardar</string>
 
     <!---->
     <string name="homeFragment">Fragmento Portada</string>
     <string name="galleryFragment">Fragmento Galeria</string>
     <string name="languageFragment">Fragmento Lenguaje</string>
+    <string name="createEventFragment">Crea un evento</string>
+
     <!--    -->
     <string name="menu_home">Portada</string>
     <string name="menu_gallery">Galeria</string>
