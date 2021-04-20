@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/nav_listEvents"
         android:name="com.example.youinvited.ui.eventList.EventListFragment"
-        android:label="event_list_fragment"
+        android:label="@string/menu_eventList"
         tools:layout="@layout/event_list_fragment" />
 
     <fragment

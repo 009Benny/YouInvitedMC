@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youinvited.R
 import com.example.youinvited.models.EventClass
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.event_list_fragment.*
 
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.event_list_fragment.*
 class EventListFragment : Fragment() {
     private var events:ArrayList<EventClass> = arrayListOf()
     private var myAdapter:EventListAdapter? = null
+    private var database = FirebaseDatabase.getInstance()
 
     companion object {
         fun newInstance() = EventListFragment()
@@ -28,8 +30,6 @@ class EventListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.events.add(EventClass("eventid1", "userID1", "Mi primer evento", "Esta es la direccion"))
-        this.events.add(EventClass("eventid2", "userID2", "Mi segundo evento", "Esta es la otra direccion"))
         return inflater.inflate(R.layout.event_list_fragment, container, false)
     }
 
@@ -49,20 +49,22 @@ class EventListFragment : Fragment() {
     }
 
     fun loadEvents(){
-        val database = FirebaseDatabase.getInstance()
-        val ref = database.getReference("Events")
-        ref.get().addOnSuccessListener {
-            val mList: MutableList<EventClass> = ArrayList()
-            for (unit in it.getChildren()) {
-                val value: EventClass? = unit.getValue(EventClass::class.java)
-                if (value != null) {
-                    mList.add(value!!)
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        if (uid.length > 0){
+            val ref = database.getReference("Events")
+            ref.child(uid).get().addOnSuccessListener {
+                val mList: MutableList<EventClass> = ArrayList()
+                for (unit in it.getChildren()) {
+                    val value: EventClass? = unit.getValue(EventClass::class.java)
+                    if (value != null) {
+                        mList.add(value!!)
+                    }
                 }
+                this.events = mList as ArrayList<EventClass>
+                this.myAdapter?.setData(this.events)
+            }.addOnFailureListener {
+                Log.e("firebase", "Error getting data", it)
             }
-            this.events = mList as ArrayList<EventClass>
-            this.myAdapter?.setData(this.events)
-        }.addOnFailureListener {
-            Log.e("firebase", "Error getting data", it)
         }
     }
 

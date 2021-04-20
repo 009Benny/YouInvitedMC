@@ -70,7 +70,7 @@ class CreateEventFragment : Fragment() {
             val database = FirebaseDatabase.getInstance()
             val event = EventClass(eventId, uid, name, address, invCount, creationDate, eventDate)
             val ref = database.getReference("Events")
-            ref.child(eventId).setValue(event)
+            ref.child(uid).child(eventId).setValue(event)
             Toast.makeText(activity, "Se registro correctamente el evento", Toast.LENGTH_SHORT)
             findNavController().navigateUp()
         }else{
