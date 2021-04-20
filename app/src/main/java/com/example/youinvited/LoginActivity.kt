@@ -63,6 +63,7 @@ class LoginActivity : AppCompatActivity() {
             putExtra("admin", admin)
         }
         startActivity(intent)
+        finish()
     }
 
     fun getUserData(uid:String){

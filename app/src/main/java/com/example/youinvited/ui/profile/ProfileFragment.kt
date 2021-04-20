@@ -7,7 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.youinvited.ProviderType
 import com.example.youinvited.R
 import com.example.youinvited.models.UserClass
@@ -48,7 +52,7 @@ class ProfileFragment : Fragment() {
             switchAdmin.isChecked = it.admin
         })
         btnEditProfile.setOnClickListener { this.btnEditAction() }
-        btnCreateEvent.setOnClickListener { if (this.edit) this.btnUpdateProfileAcction() else this.btnCreateEvent() }
+        btnCreateEvent.setOnClickListener { if (this.edit) this.btnUpdateProfileAcction() else this.btnCreateEventAction() }
     }
 
     fun loadProfile(){
@@ -69,6 +73,7 @@ class ProfileFragment : Fragment() {
 
     fun updateData(map: HashMap<String,Any>){
         viewModel.user_Data.value = UserClass(map["uid"] as? String ?: "", map["username"] as? String ?: "", map["email"] as? String ?: "", map["address"] as? String ?: "", map["phone"] as? String ?: "", map["admin"] as? Boolean ?: false)
+        btnCreateEvent.isVisible = viewModel.user_Data.value?.admin ?: false
     }
 
 
@@ -85,11 +90,8 @@ class ProfileFragment : Fragment() {
         this.btnCreateEvent.text = if (this.edit) getString(R.string.updateProfileButton) else getString(R.string.createEvent)
     }
 
-    fun btnCreateEvent(){
-        val newFragment = CreateEventFragment()
-        val transaction = activity?.supportFragmentManager?.beginTransaction()
-        transaction?.add(R.id.nav_host_fragment, newFragment)
-        transaction?.commit()
+    fun btnCreateEventAction(){
+        findNavController().navigate(ProfileFragmentDirections.actionNavProfileToCreateEventFragment())
     }
 
     fun btnUpdateProfileAcction(){

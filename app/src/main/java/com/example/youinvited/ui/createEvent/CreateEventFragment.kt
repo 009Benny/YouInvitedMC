@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.youinvited.R
 import com.example.youinvited.extensions.DatePickerFragment
 import com.example.youinvited.models.EventClass
@@ -70,7 +72,7 @@ class CreateEventFragment : Fragment() {
             val ref = database.getReference("Events")
             ref.child(eventId).setValue(event)
             Toast.makeText(activity, "Se registro correctamente el evento", Toast.LENGTH_SHORT)
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            findNavController().navigateUp()
         }else{
             Toast.makeText(activity, "Favor de rellenar todos los campos", Toast.LENGTH_SHORT)
         }
