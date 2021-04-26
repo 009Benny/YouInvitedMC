@@ -7,7 +7,7 @@ data class EventClass(
     val user_id:String = "",
     val name:String = "",
     val address:String = "",
-    val countInvited:Int = 0,
+    val countInvited:Long = 0,
     val modificationDate: Date? = null,
     val eventDate: Date? = null
     ){

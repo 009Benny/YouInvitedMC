@@ -61,10 +61,9 @@ class CreateEventFragment : Fragment() {
         val eventId = uid + name.toLowerCase().replace(" ", "_")
         val address = editTextEventAddress.text.toString()
         val places = emptyArray<String>()
-        val invCount = editTextInvitedCount.text.toString().toInt()
+        val invCount = editTextInvitedCount.text.toString().toLong()
         val creationDate = Date()
         val string = editTextEventDate.text.toString()
-        //val eventDate =
         val eventDate = SimpleDateFormat("dd-MM-yyyy").parse(string)
         if (uid.length > 0 && name.length > 0 && address.length > 0 && invCount > 0 && string.length > 0){
             val database = FirebaseDatabase.getInstance()

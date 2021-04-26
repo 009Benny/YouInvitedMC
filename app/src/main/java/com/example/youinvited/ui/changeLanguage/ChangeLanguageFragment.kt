@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.youinvited.PrincipalActivity
 import com.example.youinvited.R
-import kotlinx.android.synthetic.main.fragment_changelanguage.*
+import kotlinx.android.synthetic.main.changelanguage_fragment.*
 
 class ChangeLanguageFragment : Fragment(), View.OnClickListener{
 
@@ -16,7 +16,7 @@ class ChangeLanguageFragment : Fragment(), View.OnClickListener{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_changelanguage, container, false)
+        return inflater.inflate(R.layout.changelanguage_fragment, container, false)
     }
 
     override fun onStart() {

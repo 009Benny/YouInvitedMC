@@ -1,5 +1,6 @@
 package com.example.youinvited.ui.eventList
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,9 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.youinvited.PrincipalActivity
 import com.example.youinvited.R
 import com.example.youinvited.models.EventClass
+import com.example.youinvited.ui.profile.ProfileFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.event_list_fragment.*
@@ -74,18 +78,14 @@ class EventListFragment : Fragment(), EventListAdapter.OnItemClickListener {
         textViewNoResults.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
-    fun showEventFragment(){
-
-    }
-
-    // EventListAdapter.onEventClickListener
     override fun showEvent(position: Int) {
-        TODO("Not yet implemented")
-        /*if (position < this.events.count()){
+        if (position < this.events.count()){
             val event = this.events[position]
             val name = event.name
-            Toast.makeText(context, "$name", Toast.LENGTH_SHORT).show()
-        }*/
+            val id:String = event.event_id
+            findNavController().navigate(EventListFragmentDirections.actionNavListEventsToEditEventFragment(id))
+        }
+        return
     }
 
 }

@@ -69,8 +69,6 @@ class ProfileFragment : Fragment() {
         btnCreateEvent.isVisible = viewModel.user_Data.value?.admin ?: false
     }
 
-
-
     // MARK: - Btn Actions
     fun btnEditAction(){
         this.edit = !this.edit

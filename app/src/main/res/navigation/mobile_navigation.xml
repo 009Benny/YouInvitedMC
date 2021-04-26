@@ -9,13 +9,17 @@
         android:id="@+id/nav_listEvents"
         android:name="com.example.youinvited.ui.eventList.EventListFragment"
         android:label="@string/menu_eventList"
-        tools:layout="@layout/event_list_fragment" />
+        tools:layout="@layout/event_list_fragment" >
+        <action
+            android:id="@+id/action_nav_listEvents_to_editEventFragment"
+            app:destination="@id/editEventFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.youinvited.ui.changeLanguage.ChangeLanguageFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/ChangeLanguage" />
+        tools:layout="@layout/changelanguage_fragment" />
 
     <fragment
         android:id="@+id/nav_profile"
@@ -33,5 +37,14 @@
         android:name="com.example.youinvited.ui.createEvent.CreateEventFragment"
         android:label="@string/menu_eventList"
         tools:layout="@layout/create_event_fragment" />
+    <fragment
+        android:id="@+id/editEventFragment"
+        android:name="com.example.youinvited.ui.editEvent.EditEventFragment"
+        android:label="edit_event_fragment"
+        tools:layout="@layout/edit_event_fragment" >
+        <argument
+            android:name="id_event"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
