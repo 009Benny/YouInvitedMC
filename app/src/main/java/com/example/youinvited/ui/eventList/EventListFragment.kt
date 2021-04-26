@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.event_list_fragment.*
 
 
-class EventListFragment : Fragment() {
+class EventListFragment : Fragment(), EventListAdapter.OnItemClickListener {
     private var events:ArrayList<EventClass> = arrayListOf()
     private var myAdapter:EventListAdapter? = null
     private var database = FirebaseDatabase.getInstance()
@@ -43,7 +44,7 @@ class EventListFragment : Fragment() {
 
     fun initRecycle(){
         eventsRecycleView.layoutManager = LinearLayoutManager(this.context)
-        this.myAdapter = EventListAdapter(this.events)
+        this.myAdapter = EventListAdapter(this.events, this)
         eventsRecycleView.adapter = this.myAdapter
     }
 
@@ -71,6 +72,20 @@ class EventListFragment : Fragment() {
     fun showNoEvents(show:Boolean){
         viewNoResults.visibility = if (show) View.VISIBLE else View.INVISIBLE
         textViewNoResults.visibility = if (show) View.VISIBLE else View.INVISIBLE
+    }
+
+    fun showEventFragment(){
+
+    }
+
+    // EventListAdapter.onEventClickListener
+    override fun showEvent(position: Int) {
+        TODO("Not yet implemented")
+        /*if (position < this.events.count()){
+            val event = this.events[position]
+            val name = event.name
+            Toast.makeText(context, "$name", Toast.LENGTH_SHORT).show()
+        }*/
     }
 
 }

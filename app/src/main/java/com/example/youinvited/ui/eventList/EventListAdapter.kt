@@ -11,38 +11,55 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EventListAdapter(var events:ArrayList<EventClass>):RecyclerView.Adapter<EventListAdapter.EventHolder>() {
+class EventListAdapter(
+    private var events:ArrayList<EventClass>,
+    private val listener: OnItemClickListener
+):RecyclerView.Adapter<EventListAdapter.EventHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return EventHolder(layoutInflater.inflate(R.layout.item_event, parent, false))
-    }
-
-    override fun getItemCount(): Int {
-        return this.events.size
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
+        return EventHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: EventHolder, position: Int) {
         holder.renderCell(this.events[position])
     }
 
+    override fun getItemCount() = this.events.size
+
     fun setData(events:ArrayList<EventClass>){
         this.events = events
         this.notifyDataSetChanged()
     }
 
-    class EventHolder(val view: View):RecyclerView.ViewHolder(view){
+    inner class EventHolder(val item: View):RecyclerView.ViewHolder(item),
+        View.OnClickListener{
+
+        init {
+            item.setOnClickListener(this)
+        }
 
         fun renderCell(event:EventClass){
             val date = event.eventDate ?: Date()
             val string = SimpleDateFormat("dd - MM - yyyy").format(date)
             val address = event.address
             val count = event.countInvited
-            view.textEventDate.text = "Fecha: $string"
-            view.textTitleAddress.text = "Dirección: $address"
-            view.textTitleEvent.text = event.name
-            view.textInvitedCount.text = "No. Invitados: ${count}"
+            item.textEventDate.text = "Fecha: $string"
+            item.textTitleAddress.text = "Dirección: $address"
+            item.textTitleEvent.text = event.name
+            item.textInvitedCount.text = "No. Invitados: ${count}"
         }
 
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION){
+                listener.showEvent(position)
+            }
+        }
     }
+
+    interface OnItemClickListener{
+        fun showEvent(position: Int)
+    }
+
 }
