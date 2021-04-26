@@ -3,18 +3,14 @@ package com.example.youinvited
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
-import android.location.GnssNavigationMessage
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import android.widget.ViewAnimator
-import androidx.appcompat.app.AlertDialog
 import com.example.youinvited.models.UserClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 import kotlin.collections.HashMap
@@ -24,10 +20,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        this.loadLocate()
+        loadLocate()
         setContentView(R.layout.activity_login)
         title = ""
-//        this.progressBar = findViewById(R.id.)
         button_register.setOnClickListener { this.btnRegisterAction() }
         button_login.setOnClickListener { this.loginUser() }
     }
@@ -56,10 +51,9 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun showHome(email: String, provider: ProviderType, admin:Boolean){
+    fun showHome(email: String, admin:Boolean){
         val intent = Intent(this, PrincipalActivity::class.java).apply {
             putExtra("email", email)
-            putExtra("provider", provider)
             putExtra("admin", admin)
         }
         startActivity(intent)
@@ -73,11 +67,11 @@ class LoginActivity : AppCompatActivity() {
         ref.child(uid).get().addOnSuccessListener {
             val user= it.getValue() as? UserClass
             if (user != null){
-                this.showHome(user.email, ProviderType.BASIC, user.admin)
+                this.showHome(user.email, user.admin)
             }
             val map = it.getValue() as? HashMap<String, Any>
             if (map != null){
-                this.showHome(map["email"] as? String ?: "", ProviderType.BASIC, map["admin"] as? Boolean ?: false)
+                this.showHome(map["email"] as? String ?: "", map["admin"] as? Boolean ?: false)
             }
         }.addOnFailureListener {
             Toast.makeText(this, "Error al cargar usuario", Toast.LENGTH_SHORT).show()

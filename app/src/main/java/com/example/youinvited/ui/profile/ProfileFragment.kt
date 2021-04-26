@@ -9,18 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.youinvited.ProviderType
 import com.example.youinvited.R
 import com.example.youinvited.models.UserClass
-import com.example.youinvited.ui.createEvent.CreateEventFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_login.textFieldEmail
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.android.synthetic.main.profile_fragment.switchAdmin
 

@@ -7,13 +7,10 @@
         android:id="@+id/groupItems">
 
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home"/>
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_listEvents"
+            android:icon="@drawable/icon_list"
+            android:title="@string/menu_eventList" />
+
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
@@ -23,9 +20,5 @@
             android:icon="@drawable/usuario"
             android:title="@string/menu_profile" />
 
-        <item
-            android:id="@+id/nav_listEvents"
-            android:icon="@drawable/icon_list"
-            android:title="@string/menu_eventList" />
     </group>
 </menu>
