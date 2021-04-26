@@ -60,5 +60,7 @@
 
     <string name="select_languaje">Presiona el botón para cambiar de idioma</string>
     <string name="btn_languaje">Cambiar lenguaje</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="no_events">Aún no tienes eventos</string>
 
 </resources>

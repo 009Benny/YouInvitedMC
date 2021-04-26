@@ -38,7 +38,6 @@ class EventListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(EventListViewModel::class.java)
         // TODO: Use the ViewModel
         this.initRecycle()
-
         this.loadEvents()
     }
 
@@ -61,11 +60,17 @@ class EventListFragment : Fragment() {
                     }
                 }
                 this.events = mList as ArrayList<EventClass>
+                this.showNoEvents(this.events.count() == 0)
                 this.myAdapter?.setData(this.events)
             }.addOnFailureListener {
                 Log.e("firebase", "Error getting data", it)
             }
         }
+    }
+
+    fun showNoEvents(show:Boolean){
+        viewNoResults.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        textViewNoResults.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
 }
