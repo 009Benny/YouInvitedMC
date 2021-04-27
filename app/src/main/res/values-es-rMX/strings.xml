@@ -63,5 +63,6 @@
     <string name="btn_languaje">Cambiar lenguaje</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="no_events">Aún no tienes eventos</string>
+    <string name="regresarBtn">Regresar</string>
 
 </resources>

@@ -50,8 +50,7 @@ class CreateEventFragment : Fragment() {
     }
 
     fun btnCancelAction(){
-        val frag = ProfileFragment()
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment, frag)?.commit()
+        findNavController().navigateUp()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

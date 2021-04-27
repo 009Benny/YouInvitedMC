@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/editEventFragment"
         android:name="com.example.youinvited.ui.editEvent.EditEventFragment"
-        android:label="edit_event_fragment"
+        android:label=""
         tools:layout="@layout/edit_event_fragment" >
         <argument
             android:name="id_event"
