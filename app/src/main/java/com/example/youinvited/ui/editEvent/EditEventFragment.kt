@@ -1,7 +1,12 @@
 package com.example.youinvited.ui.editEvent
 
+import android.app.Activity.RESULT_OK
+import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +14,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.youinvited.R
 import com.example.youinvited.models.EventClass
 import com.example.youinvited.ui.eventList.EventListFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.edit_event_fragment.*
 import kotlinx.android.synthetic.main.profile_fragment.*
+import java.io.File
+import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -25,6 +36,8 @@ class EditEventFragment : Fragment() {
     private var isEditing:Boolean = false
     val args:EditEventFragmentArgs by navArgs()
     var id_event:String = ""
+    val storageRef:StorageReference = FirebaseStorage.getInstance().reference
+    private var imageUri: Uri? = null
 
     companion object {
         fun newInstance() = EditEventFragment()
@@ -56,6 +69,19 @@ class EditEventFragment : Fragment() {
         })
         btnEditEvent.setOnClickListener{ this.btnEditAction() }
         btnCancel.setOnClickListener{ if (this.isEditing) this.btnUpdateEventAction() else this.btnCancelAction() }
+        btnSelectImage.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, 100)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            imageUri = data?.data
+            imageViewMap.setImageURI(imageUri)
+            uploadFile(imageUri)
+        }
     }
 
     fun loadData(event_id:String){
@@ -70,6 +96,13 @@ class EditEventFragment : Fragment() {
                 }
             }.addOnFailureListener {
                 print("here")
+            }
+            storageRef.child("images/$event_id").downloadUrl.addOnSuccessListener {
+                this.imageUri = it
+                Picasso.get().load(it).into(imageViewMap)
+            }.addOnFailureListener {
+                print(it)
+               //Toast.makeText(context, "No se pudo descargar la imagen", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -86,7 +119,6 @@ class EditEventFragment : Fragment() {
             getDate(modificationDateMap) as? Date ?: null,
             getDate(eventDateMap) as? Date ?: null
         )
-        //btnCreateEvent.isVisible = vixewModel.user_Data.value?.admin ?: false
     }
 
     fun getDate(map:HashMap<String,Any>?):Date?{
@@ -126,6 +158,34 @@ class EditEventFragment : Fragment() {
 
     fun btnCancelAction(){
         findNavController().navigateUp()
+    }
+
+    fun uploadFile(path:Uri?){
+        if (path != null){
+            var pd = ProgressDialog(context)
+            pd.setTitle("Uploading...")
+            pd.show()
+            //var ref = FirebaseStorage.getInstance().reference.child("images$id_event")
+            var ref = FirebaseStorage.getInstance().reference.child("images").child("prueba1")
+            ref.putFile(path).addOnSuccessListener {
+                pd.dismiss()
+                Toast.makeText(context, "File Uploaded", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                pd.dismiss()
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+            }.addOnProgressListener {
+                var progress = (100 * it.bytesTransferred / it.totalByteCount)
+                pd.setMessage("Uploading...${progress.toInt()}%")
+            }
+        }
+    }
+
+    fun showImageMapEditor(){
+        if (this.imageUri != null){
+
+        }else{
+            Toast.makeText(context, "Necesitas seleccionar una imagen para poder editar el mapa", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
