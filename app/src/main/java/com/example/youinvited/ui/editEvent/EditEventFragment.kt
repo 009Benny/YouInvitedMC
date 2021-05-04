@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.youinvited.R
 import com.example.youinvited.models.EventClass
 import com.example.youinvited.ui.eventList.EventListFragment
+import com.example.youinvited.ui.eventList.EventListFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -36,6 +37,7 @@ class EditEventFragment : Fragment() {
     private var isEditing:Boolean = false
     val args:EditEventFragmentArgs by navArgs()
     var id_event:String = ""
+    var guests_count:Int = 0
     val storageRef:StorageReference = FirebaseStorage.getInstance().reference
     private var imageUri: Uri? = null
 
@@ -72,6 +74,9 @@ class EditEventFragment : Fragment() {
         btnSelectImage.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, 100)
+        }
+        btnEditMap.setOnClickListener {
+            this.showImageMapEditor()
         }
     }
 
@@ -119,6 +124,8 @@ class EditEventFragment : Fragment() {
             getDate(modificationDateMap) as? Date ?: null,
             getDate(eventDateMap) as? Date ?: null
         )
+        val aux = map["countInvited"] as? Long ?: 0
+        this.guests_count = aux.toInt()
     }
 
     fun getDate(map:HashMap<String,Any>?):Date?{
@@ -149,6 +156,7 @@ class EditEventFragment : Fragment() {
             val event = EventClass(id_event, uid, editTextEventName.text.toString(), editTextEventAddress.text.toString(), editTextInvitedCount.text.toString().toLong(), Date(), eventDate)
             val ref = database.getReference("Events")
             ref.child(uid).child(this.id_event).setValue(event)
+            this.guests_count = editTextInvitedCount.text.toString().toInt()
             Toast.makeText(activity, "Se actualizo correctamente", Toast.LENGTH_SHORT).show()
             this.btnCancelAction()
         }else{
@@ -166,7 +174,7 @@ class EditEventFragment : Fragment() {
             pd.setTitle("Uploading...")
             pd.show()
             //var ref = FirebaseStorage.getInstance().reference.child("images$id_event")
-            var ref = FirebaseStorage.getInstance().reference.child("images").child("prueba1")
+            var ref = FirebaseStorage.getInstance().reference.child("images").child(this.id_event)
             ref.putFile(path).addOnSuccessListener {
                 pd.dismiss()
                 Toast.makeText(context, "File Uploaded", Toast.LENGTH_SHORT).show()
@@ -182,7 +190,14 @@ class EditEventFragment : Fragment() {
 
     fun showImageMapEditor(){
         if (this.imageUri != null){
-
+            findNavController().navigate(EditEventFragmentDirections.actionEditEventFragmentToMapEditFragment(this.id_event, this.guests_count))
+            /*if (position < this.events.count()){
+                val event = this.events[position]
+                val name = event.name
+                val id:String = event.event_id
+                findNavController().navigate(EventListFragmentDirections.actionNavListEventsToEditEventFragment(id))
+            }*/
+            //action_editEventFragment_to_mapEditFragment
         }else{
             Toast.makeText(context, "Necesitas seleccionar una imagen para poder editar el mapa", Toast.LENGTH_SHORT).show()
         }

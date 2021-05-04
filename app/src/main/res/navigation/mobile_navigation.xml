@@ -45,6 +45,22 @@
         <argument
             android:name="id_event"
             app:argType="string" />
+        <action
+            android:id="@+id/action_editEventFragment_to_mapEditFragment"
+            app:destination="@id/mapEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapEditFragment"
+        android:name="com.example.youinvited.ui.mapEdit.MapEditFragment"
+        android:label=""
+        tools:layout="@layout/map_edit_fragment" >
+        <argument
+            android:name="id_event"
+            app:argType="string" />
+        <argument
+            android:name="guests_count"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
 </navigation>
