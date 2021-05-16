@@ -1,6 +1,8 @@
 package com.example.youinvited.ui.mapEdit
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -38,7 +40,6 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
     var id_event:String = ""
     var count_guests:Int = 0
 
-
     companion object {
         fun newInstance() = MapEditFragment()
     }
@@ -74,6 +75,8 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
 
     override fun onSelectInvited(position: Int) {
         Toast.makeText(context, "Se selecciono la persona: $position", Toast.LENGTH_SHORT).show()
+        //imgMap
+
     }
 
     fun loadImage(){
@@ -82,7 +85,6 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
             Picasso.get().load(it).into(imgMap)
         }.addOnFailureListener {
             print(it)
-            //Toast.makeText(context, "No se pudo descargar la imagen", Toast.LENGTH_SHORT).show()
         }
     }
 
