@@ -3,20 +3,21 @@ package com.example.youinvited
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.youinvited.models.UserClass
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
-import kotlin.collections.HashMap
 
 class LoginActivity : AppCompatActivity() {
     var progressBar:ProgressBar? = null
+    var mDatabase : DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +31,19 @@ class LoginActivity : AppCompatActivity() {
     fun loginUser(){
         if (textFieldEmail.text.isNotEmpty() && textFieldPass.text.isNotEmpty()) {
             this.progressBar?.visibility = View.VISIBLE
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(textFieldEmail.text.toString(),textFieldPass.text.toString()).addOnCompleteListener {
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                    textFieldEmail.text.toString(),
+                    textFieldPass.text.toString()
+            ).addOnCompleteListener {
                 this.progressBar?.visibility = View.INVISIBLE
                 if (it.isSuccessful){
                     val user = FirebaseAuth.getInstance().currentUser
                     if (user?.isEmailVerified == false){
-                        Toast.makeText(this, "Su cuenta no ha sido verificada, favor de revisar su correo eléctronico", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                                this,
+                                "Su cuenta no ha sido verificada, favor de revisar su correo eléctronico",
+                                Toast.LENGTH_LONG
+                        ).show()
                     }else{
                         Toast.makeText(this, "Se inició sesión correctamente", Toast.LENGTH_LONG).show()
                         user?.uid?.let { uid -> this.getUserData(uid) }
@@ -51,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun showHome(email: String, admin:Boolean){
+    fun showHome(email: String, admin: Boolean){
         val intent = Intent(this, PrincipalActivity::class.java).apply {
             putExtra("email", email)
             putExtra("admin", admin)
@@ -60,11 +68,15 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    fun getUserData(uid:String){
-        val database = FirebaseDatabase.getInstance()
-        database.setPersistenceEnabled(true)
-        val ref = database.getReference("Users")
-        ref.child(uid).get().addOnSuccessListener {
+    fun getUserData(uid: String){
+        var database : FirebaseDatabase? = null
+        if (mDatabase == null) {
+            database = FirebaseDatabase.getInstance()
+            database.setPersistenceEnabled(true)
+            mDatabase = database.reference
+        }
+        val ref = database?.getReference("Users")
+        ref?.child(uid)?.get()?.addOnSuccessListener {
             val user= it.getValue() as? UserClass
             if (user != null){
                 this.showHome(user.email, user.admin)
@@ -73,12 +85,12 @@ class LoginActivity : AppCompatActivity() {
             if (map != null){
                 this.showHome(map["email"] as? String ?: "", map["admin"] as? Boolean ?: false)
             }
-        }.addOnFailureListener {
+        }?.addOnFailureListener {
             Toast.makeText(this, "Error al cargar usuario", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun setLocale(language:String){
+    fun setLocale(language: String){
         val locale = Locale(language)
         Locale.setDefault(locale)
         val config = Configuration()
@@ -91,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun loadLocate(){
         val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        var language: String? = sharedPreferences.getString("My_Lang", "")
+        val language: String? = sharedPreferences.getString("My_Lang", "")
         if (language != null){
             setLocale(language!!)
         }

@@ -28,9 +28,11 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.textFieldEmail
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.switchAdmin
 import kotlinx.android.synthetic.main.map_edit_fragment.*
+import kotlinx.android.synthetic.main.profile_fragment.*
 
-class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
+class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener, MapEditDelegate {
     private val storageRef = FirebaseStorage.getInstance().reference
     private val database = FirebaseDatabase.getInstance()
     private var persons:ArrayList<InvitedClass> = arrayListOf()
@@ -60,9 +62,12 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mapView.delegate = this
+        btnSaveChanges.setOnClickListener { saveChanges() }
         viewModel = ViewModelProvider(this).get(MapEditViewModel::class.java)
         this.initRecycle()
         this.downloadInviteds()
+        persons
     }
 
 
@@ -74,8 +79,12 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
     }
 
     override fun onSelectInvited(position: Int) {
+        val invited = this.persons[position]
+        mapView.showInvited(invited)
         Toast.makeText(context, "Se selecciono la persona: $position", Toast.LENGTH_SHORT).show()
-        //imgMap
+    }
+
+    override fun showCode(inv: InvitedClass) {
 
     }
 
@@ -118,10 +127,10 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
             val array:ArrayList<InvitedClass> = ArrayList()
             for (i in 0..this.count_guests) {
                 val name = i + 1
-                val guest_id :String = "$uid-$id_event-guest$i" ?: ""
+                val guest_id :String = "$id_event-guest$i" ?: ""
                 val guest = InvitedClass(
                         guest_id,
-                        "$id_event-guest$i",
+                        "guest$i",
                         id_event ?: "",
                         "Guest-$name"
                 )
@@ -130,6 +139,19 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener {
             }
             this.persons = array
             this.myAdapter?.setData(this.persons)
+        }
+    }
+
+    override fun saveChanges() {
+        val database = FirebaseDatabase.getInstance()
+        val ref = database.getReference("Guests")
+        if (this.persons.size > 0){
+            var i = 0
+            this.persons.forEach {
+                ref.child(this.id_event).child("$id_event-guest$i").setValue(it)
+                i ++
+            }
+            Toast.makeText(activity, "Se actualizo correctamente", Toast.LENGTH_SHORT).show()
         }
     }
 

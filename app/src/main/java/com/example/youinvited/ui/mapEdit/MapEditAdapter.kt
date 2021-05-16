@@ -39,6 +39,9 @@ class MapEditAdapter(
 
         fun renderCell(invited: InvitedClass){
             item.textTitle.text = invited.public_name
+            item.btnGenerateQR.setOnClickListener {
+                this.showCode(invited)
+            }
             if (invited.x != null && invited.y != null){
                 val x:Double = invited.x ?: 0.0
                 val y:Double = invited.y ?: 0.0
@@ -54,10 +57,15 @@ class MapEditAdapter(
                 listener.onSelectInvited(position)
             }
         }
+
+        fun showCode(invited:InvitedClass){
+            listener.showCode(invited)
+        }
     }
 
     interface OnItemClickListener{
         fun onSelectInvited(position: Int)
+        fun showCode(inv:InvitedClass)
     }
 
 }
