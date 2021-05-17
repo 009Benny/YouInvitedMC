@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.youinvited"
-        minSdkVersion 16
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -35,6 +35,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures{
+        viewBinding = true
     }
 }
 
@@ -59,6 +62,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //QR
+    implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'

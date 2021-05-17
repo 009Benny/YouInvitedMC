@@ -191,13 +191,6 @@ class EditEventFragment : Fragment() {
     fun showImageMapEditor(){
         if (this.imageUri != null){
             findNavController().navigate(EditEventFragmentDirections.actionEditEventFragmentToMapEditFragment(this.id_event, this.guests_count))
-            /*if (position < this.events.count()){
-                val event = this.events[position]
-                val name = event.name
-                val id:String = event.event_id
-                findNavController().navigate(EventListFragmentDirections.actionNavListEventsToEditEventFragment(id))
-            }*/
-            //action_editEventFragment_to_mapEditFragment
         }else{
             Toast.makeText(context, "Necesitas seleccionar una imagen para poder editar el mapa", Toast.LENGTH_SHORT).show()
         }

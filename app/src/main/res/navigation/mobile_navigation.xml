@@ -61,6 +61,20 @@
             android:name="guests_count"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_mapEditFragment_to_generateQRFragment"
+            app:destination="@id/generateQRFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/generateQRFragment"
+        android:name="com.example.youinvited.ui.generateQR.GenerateQRFragment"
+        android:label="YouInvited"
+        tools:layout="@layout/fragment_generate_q_r" >
+        <argument
+            android:name="qrText"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue='"qr://"' />
     </fragment>
 
 </navigation>

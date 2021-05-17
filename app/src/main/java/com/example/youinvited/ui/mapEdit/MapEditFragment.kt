@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
@@ -20,6 +21,7 @@ import com.example.youinvited.models.EventClass
 import com.example.youinvited.models.InvitedClass
 import com.example.youinvited.models.UserClass
 import com.example.youinvited.ui.editEvent.EditEventFragmentArgs
+import com.example.youinvited.ui.editEvent.EditEventFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -85,7 +87,9 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener, MapEditD
     }
 
     override fun showCode(inv: InvitedClass) {
-
+        val id = inv.location_id
+        val link = "youinvited://$id"
+        findNavController().navigate(MapEditFragmentDirections.actionMapEditFragmentToGenerateQRFragment(link))
     }
 
     fun loadImage(){
