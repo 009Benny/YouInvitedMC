@@ -3,6 +3,7 @@ package com.example.youinvited
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
@@ -20,12 +21,16 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import com.example.youinvited.ui.showQRPlace.ShowPlaceAtivity
+import com.google.zxing.integration.android.IntentIntegrator
 import org.intellij.lang.annotations.Language
 import java.util.*
 
 class PrincipalActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    var navController:NavController? = null
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +55,27 @@ class PrincipalActivity : AppCompatActivity() {
         if (admin == true){
             val adminColor: Long = 0xFFCD6155;
         }
-        val navController = findNavController(R.id.nav_host_fragment)
+        this.navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_slideshow, R.id.nav_profile, R.id.nav_listEvents), drawerLayout)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        setupActionBarWithNavController(this.navController!!, appBarConfiguration)
+        navView.setupWithNavController(this.navController!!)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if(result.contents == null){
+                Toast.makeText(this, "No se reconocio el código", Toast.LENGTH_LONG)
+            }else{
+                val intent = Intent(this, ShowPlaceAtivity::class.java).apply {
+                    putExtra("qr_code", result.contents.toString())
+                }
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

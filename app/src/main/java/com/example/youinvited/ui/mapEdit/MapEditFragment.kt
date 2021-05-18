@@ -69,7 +69,6 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener, MapEditD
         viewModel = ViewModelProvider(this).get(MapEditViewModel::class.java)
         this.initRecycle()
         this.downloadInviteds()
-        persons
     }
 
 
@@ -129,7 +128,7 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener, MapEditD
             val uid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val ref = database.getReference("Guests")
             val array:ArrayList<InvitedClass> = ArrayList()
-            for (i in 0..this.count_guests) {
+            for (i in 0 until this.count_guests) {
                 val name = i + 1
                 val guest_id :String = "$id_event-guest$i" ?: ""
                 val guest = InvitedClass(
@@ -152,7 +151,7 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener, MapEditD
         if (this.persons.size > 0){
             var i = 0
             this.persons.forEach {
-                ref.child(this.id_event).child("$id_event-guest$i").setValue(it)
+                ref.child(this.id_event).child("$id_event-guest-$i").setValue(it)
                 i ++
             }
             Toast.makeText(activity, "Se actualizo correctamente", Toast.LENGTH_SHORT).show()

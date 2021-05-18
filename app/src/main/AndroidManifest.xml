@@ -3,18 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.youinvited">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="true"
         android:theme="@style/Theme.YouInvited">
+        <activity
+            android:name=".ui.showQRPlace.ShowPlaceAtivity"
+            android:label="@string/title_activity_show_place_ativity"/>
         <activity
             android:name=".PrincipalActivity"
             android:label="@string/title_activity_principal"
-            android:theme="@style/Theme.YouInvited.NoActionBar"></activity>
+            android:theme="@style/Theme.YouInvited.NoActionBar" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">

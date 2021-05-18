@@ -20,5 +20,10 @@
             android:icon="@drawable/usuario"
             android:title="@string/menu_profile" />
 
+        <item
+            android:id="@+id/showScanFragment"
+            android:icon="@drawable/scanner_icon"
+            android:title="@string/menu_scanner" />
+
     </group>
 </menu>

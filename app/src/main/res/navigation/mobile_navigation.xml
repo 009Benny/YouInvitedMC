@@ -76,5 +76,10 @@
             app:nullable="true"
             android:defaultValue='"qr://"' />
     </fragment>
+    <fragment
+        android:id="@+id/showScanFragment"
+        android:name="com.example.youinvited.ui.ShowScanFragment"
+        android:label="fragment_show_scan"
+        tools:layout="@layout/fragment_show_scan" />
 
 </navigation>
