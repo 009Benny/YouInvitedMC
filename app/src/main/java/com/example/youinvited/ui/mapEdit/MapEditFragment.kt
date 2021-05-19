@@ -130,7 +130,7 @@ class MapEditFragment : Fragment(), MapEditAdapter.OnItemClickListener, MapEditD
             val array:ArrayList<InvitedClass> = ArrayList()
             for (i in 0 until this.count_guests) {
                 val name = i + 1
-                val guest_id :String = "$id_event-guest$i" ?: ""
+                val guest_id :String = "$id_event-guest-$i" ?: ""
                 val guest = InvitedClass(
                         guest_id,
                         "guest$i",

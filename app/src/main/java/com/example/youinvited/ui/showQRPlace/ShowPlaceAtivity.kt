@@ -40,15 +40,21 @@ class ShowPlaceAtivity : AppCompatActivity() {
             ref.child(this.event_id).child(this.invited_id).get().addOnSuccessListener {
                 val map = it.getValue() as? HashMap<String, Any>
                 if (map != null){
-                    val x = map.get("x")
-                    val y = map.get("y")
+                    val auxx = map.get("x").toString()
+                    val auxy = map.get("y").toString()
+                    var x:Double? = null
+                    var y:Double? = null
+                    if (auxx.length > 0 && auxy.length > 0){
+                        x = auxx.toDouble()
+                        y = auxy.toDouble()
+                    }
                     val invited = InvitedClass(
                             map.get("location_id").toString(),
                             map.get("invited_id").toString(),
                             map.get("event_id").toString(),
                             map.get("public_name").toString(),
-                            0.0,
-                            0.0
+                            x,
+                            y
                     )
                     mapView.showInvited(invited)
                 }
